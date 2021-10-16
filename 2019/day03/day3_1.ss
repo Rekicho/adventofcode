@@ -1,0 +1,66 @@
+(define day3.1
+  (letrec ((distance
+            (lambda (ponto)
+              (+ (abs (car ponto)) (abs (cdr ponto)))))
+           (minimo
+            (lambda (lista counter)
+              (if (eq? lista '())
+                  counter
+                  (let ((d (distance (car lista))))
+                    (if (zero? d)
+                        (minimo (cdr lista) counter)
+                        (minimo (cdr lista) (if (zero? counter) d (min counter d)))))))) 
+           (lineIntersection
+            (lambda (a b c d)
+              (let ((a1 (- (cdr b) (cdr a)))
+                    (b1 (- (car a) (car b)))
+                    (a2 (- (cdr d) (cdr c)))
+                    (b2 (- (car c) (car d))))
+                (let ((c1 (+ (* a1 (car a)) (* b1 (cdr a))))
+                      (c2 (+ (* a2 (car c)) (* b2 (cdr c))))
+                      (determinant (- (* a1 b2) (* a2 b1))))
+                  (if (zero? determinant)
+                      (cons 0 0)
+                      (let ((res (cons
+                       (/ (- (* b2 c1) (* b1 c2)) determinant)
+                       (/ (- (* a1 c2) (* a2 c1)) determinant))))
+                      (if (or (< (car res) (min (car a) (car b))) 
+                              (> (car res) (max (car a) (car b)))
+                              (< (car res) (min (car c) (car d))) 
+                              (> (car res) (max (car c) (car d)))
+                              (< (cdr res) (min (cdr a) (cdr b))) 
+                              (> (cdr res) (max (cdr a) (cdr b)))
+                              (< (cdr res) (min (cdr c) (cdr d))) 
+                              (> (cdr res) (max (cdr c) (cdr d))))
+                          (cons 0 0)
+                          res)))))))
+           (intersect
+            (lambda (linha1 linha2 i1 i2 inter)
+              (if (= i1 (vector-length linha1))
+                  (minimo inter 0)
+                  (if (= i2 (vector-length linha2))
+                      (intersect linha1 linha2 (+ i1 1) 1 inter)
+                      (intersect linha1 linha2 i1 (+ i2 1) (append inter (list (lineIntersection (vector-ref linha1 (- i1 1)) (vector-ref linha1 i1) (vector-ref linha2 (- i2 1)) (vector-ref linha2 i2)))))))))
+           (parse
+            (lambda (lista coord input)
+              (cond
+                ((char=? #\u (string-ref input 0)) (append lista (list (cons (car coord) (+ (cdr coord) (string->number (substring input 1)))))))
+                ((char=? #\l (string-ref input 0)) (append lista (list (cons (- (car coord) (string->number (substring input 1))) (cdr coord)))))
+                ((char=? #\r (string-ref input 0)) (append lista (list (cons (+ (car coord) (string->number (substring input 1))) (cdr coord)))))
+                ((char=? #\d (string-ref input 0)) (append lista (list (cons (car coord) (- (cdr coord) (string->number (substring input 1))))))))))
+           (aux_aux
+            (lambda (input lista outra)
+              (let ((waste (read-char input))
+                    (caracter (read input)))
+                (if (eof-object? caracter)
+                    (intersect (list->vector outra) (list->vector lista) 1 1 (list))
+                    (if (not (char=? #\, waste))
+                        (aux_aux input (parse outra (cons 0 0) (symbol->string caracter)) lista) 
+                        (aux_aux input (parse lista (car (list-tail lista (- (length lista) 1))) (symbol->string caracter)) outra))))))
+           (aux
+            (lambda (input)
+              (aux_aux input (parse (list (cons 0 0)) (cons 0 0) (symbol->string (read input))) (list (cons 0 0))))))                  
+    (lambda ()
+      (aux (open-input-file "input.txt")))))
+
+(day3.1)
