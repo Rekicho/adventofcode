@@ -11,4 +11,4 @@ My solutions for Advent of Code.
 | 2018 | C++ | 🚧 Up to Day 09
 | 2019 | Scheme | 🚧 Up to Day 06
 | 2020 | Python | ✔️ Missing Day 20 Part 2
-| 2021 | Rust | 🔁 Up to Day 01
+| 2021 | Rust | 🔁 Up to Day n
