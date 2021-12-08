@@ -1,7 +1,7 @@
 use std::fs;
 
 fn main() {
-    let data = fs::read_to_string("input.txt").expect("Unable to read file");
+    let data = fs::read_to_string("input.txt").unwrap();
     let mut values: [u64; 9] = [0; 9];
 
     for number in data.split(",").map(|x| x.parse::<usize>().unwrap()) {

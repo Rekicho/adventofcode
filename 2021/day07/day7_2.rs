@@ -6,7 +6,7 @@ fn fuel_cost(pos_diff: i32) -> i32 {
 }
 
 fn main() {
-    let data = fs::read_to_string("input.txt").expect("Unable to read file");
+    let data = fs::read_to_string("input.txt").unwrap();
 
     let numbers: Vec<i32> = data.split(",").map(|x| x.parse().unwrap()).collect();
     let min = numbers.clone().into_iter().min().unwrap();

@@ -2,7 +2,7 @@ use std::fs;
 use std::convert::TryInto;
 
 fn main() {
-    let data = fs::read_to_string("input.txt").expect("Unable to read file");
+    let data = fs::read_to_string("input.txt").unwrap();
 
     let numbers = data.split("\n");
     let mut matrix: Vec<Vec<u32>> = Vec::new();

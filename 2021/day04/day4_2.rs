@@ -30,7 +30,7 @@ fn sum_uncalled(card: &Vec<Vec<(u32, bool)>>) -> u32 {
 }
 
 fn main() {
-    let data = fs::read_to_string("input.txt").expect("Unable to read file");
+    let data = fs::read_to_string("input.txt").unwrap();
 
     let info = data.split("\n\n");
     let mut called: Vec<u32> = Vec::new();

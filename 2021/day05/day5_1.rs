@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::cmp;
 
 fn main() {
-    let data = fs::read_to_string("input.txt").expect("Unable to read file");
+    let data = fs::read_to_string("input.txt").unwrap();
 
     let lines = data.split("\n");
     let mut map: HashMap<(u32,u32), u32> = HashMap::new();
