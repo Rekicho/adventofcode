@@ -1,5 +1,5 @@
-use std::fs;
 use std::collections::VecDeque;
+use std::fs;
 
 fn main() {
     let data = fs::read_to_string("input.txt").unwrap();
@@ -8,7 +8,7 @@ fn main() {
 
     for (i, line) in data.split("\n").enumerate() {
         for (j, octopus) in line.chars().enumerate() {
-            octopuses[i+1][j+1] = (octopus.to_digit(10).unwrap(), false);
+            octopuses[i + 1][j + 1] = (octopus.to_digit(10).unwrap(), false);
         }
     }
 
@@ -19,8 +19,7 @@ fn main() {
             for j in 1..11 {
                 if octopuses[i][j].1 {
                     octopuses[i][j] = (1, false);
-                }
-                else {
+                } else {
                     octopuses[i][j] = (octopuses[i][j].0 + 1, false);
                 }
             }
@@ -41,11 +40,20 @@ fn main() {
                         flashes += 1;
                         let (ci, cj) = to_flash.pop_front().unwrap();
 
-                        let adjacent: [(usize, usize); 8] = [(ci-1, cj-1), (ci-1, cj), (ci-1, cj+1), (ci, cj-1), (ci, cj+1), (ci+1, cj-1), (ci+1, cj), (ci+1, cj+1)];
+                        let adjacent: [(usize, usize); 8] = [
+                            (ci - 1, cj - 1),
+                            (ci - 1, cj),
+                            (ci - 1, cj + 1),
+                            (ci, cj - 1),
+                            (ci, cj + 1),
+                            (ci + 1, cj - 1),
+                            (ci + 1, cj),
+                            (ci + 1, cj + 1),
+                        ];
 
                         for (ii, jj) in adjacent {
                             if ii < 1 || ii > 10 || jj < 1 || jj > 10 || octopuses[ii][jj].1 {
-                               continue; 
+                                continue;
                             }
 
                             octopuses[ii][jj].0 += 1;

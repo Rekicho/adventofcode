@@ -1,12 +1,12 @@
-use std::fs;
-use std::collections::HashMap;
 use std::cmp;
+use std::collections::HashMap;
+use std::fs;
 
 fn main() {
     let data = fs::read_to_string("input.txt").unwrap();
 
     let lines = data.split("\n");
-    let mut map: HashMap<(u32,u32), u32> = HashMap::new();
+    let mut map: HashMap<(u32, u32), u32> = HashMap::new();
 
     for line in lines {
         let ends = line.split(" -> ").collect::<Vec<&str>>();
@@ -19,13 +19,13 @@ fn main() {
             let min = cmp::min(from[1], to[1]);
             let max = cmp::max(from[1], to[1]);
 
-            for y in min..max+1 {
+            for y in min..max + 1 {
                 points.push((from[0], y));
             }
         } else if from[1] == to[1] {
             let min = cmp::min(from[0], to[0]);
             let max = cmp::max(from[0], to[0]);
-            for x in min..max+1 {
+            for x in min..max + 1 {
                 points.push((x, from[1]));
             }
         }
@@ -39,6 +39,6 @@ fn main() {
         }
     }
 
-    let res = map.into_iter().filter(|&(_ ,v)| v >= 2).count();
+    let res = map.into_iter().filter(|&(_, v)| v >= 2).count();
     println!("{}", res);
 }

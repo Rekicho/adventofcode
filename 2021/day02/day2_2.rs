@@ -14,7 +14,7 @@ fn main() {
             "forward" => {
                 horizontal += split[1].parse::<i32>().unwrap();
                 depth += aim * split[1].parse::<i32>().unwrap()
-            },
+            }
             "down" => aim += split[1].parse::<i32>().unwrap(),
             "up" => aim -= split[1].parse::<i32>().unwrap(),
             _ => (),

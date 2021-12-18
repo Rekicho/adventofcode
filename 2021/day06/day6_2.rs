@@ -12,7 +12,7 @@ fn main() {
         let old_values = values.clone();
 
         for i in 1..9 {
-            values[i-1] = old_values[i];
+            values[i - 1] = old_values[i];
         }
 
         values[8] = old_values[0];

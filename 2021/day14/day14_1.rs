@@ -1,6 +1,6 @@
-use std::fs;
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::fs;
 
 fn main() {
     let data = fs::read_to_string("input.txt").unwrap();
@@ -18,9 +18,16 @@ fn main() {
     }
 
     for _ in 0..10 {
-        let windows: Vec<[char; 2]> = polymer[..].windows(2).flat_map(<[char; 2]>::try_from).collect();
-        let new_polymer = windows.into_iter().fold(Vec::new(), |mut new_vec: Vec<char>, window| { new_vec.extend(rules.get(&window).unwrap());
-                                                                                                  new_vec });
+        let windows: Vec<[char; 2]> = polymer[..]
+            .windows(2)
+            .flat_map(<[char; 2]>::try_from)
+            .collect();
+        let new_polymer = windows
+            .into_iter()
+            .fold(Vec::new(), |mut new_vec: Vec<char>, window| {
+                new_vec.extend(rules.get(&window).unwrap());
+                new_vec
+            });
         polymer = Vec::from([polymer[0]]);
         polymer.extend(new_polymer);
     }

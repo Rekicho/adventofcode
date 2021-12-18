@@ -1,6 +1,6 @@
-use std::fs;
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::fs;
 
 fn main() {
     let data = fs::read_to_string("input.txt").unwrap();
@@ -14,12 +14,18 @@ fn main() {
         let before: Vec<char> = line_parts[0].chars().collect();
         let after: Vec<char> = line_parts[1].chars().collect();
 
-        rules.insert([before[0], before[1]], [[before[0], after[0]], [after[0], before[1]]]);
+        rules.insert(
+            [before[0], before[1]],
+            [[before[0], after[0]], [after[0], before[1]]],
+        );
     }
 
     let polymer: Vec<char> = parts[0].chars().collect();
     let first_letter: char = polymer[0];
-    let windows: Vec<[char; 2]> = polymer[..].windows(2).flat_map(<[char; 2]>::try_from).collect();
+    let windows: Vec<[char; 2]> = polymer[..]
+        .windows(2)
+        .flat_map(<[char; 2]>::try_from)
+        .collect();
     let mut count: HashMap<[char; 2], u64> = HashMap::new();
 
     for pattern in windows {

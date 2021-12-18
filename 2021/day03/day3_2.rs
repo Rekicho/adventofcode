@@ -1,5 +1,5 @@
-use std::fs;
 use std::convert::TryInto;
+use std::fs;
 
 fn main() {
     let data = fs::read_to_string("input.txt").unwrap();
@@ -15,7 +15,10 @@ fn main() {
     let mut i = 0;
 
     while generator_matrix.len() > 1 {
-        let sum = generator_matrix.clone().into_iter().fold(0, |acc, x| acc + x[i]);
+        let sum = generator_matrix
+            .clone()
+            .into_iter()
+            .fold(0, |acc, x| acc + x[i]);
 
         if sum * 2 >= generator_matrix.len().try_into().unwrap() {
             generator_matrix = generator_matrix.into_iter().filter(|x| x[i] == 1).collect();
@@ -30,7 +33,10 @@ fn main() {
     i = 0;
 
     while scrubber_matrix.len() > 1 {
-        let sum = scrubber_matrix.clone().into_iter().fold(0, |acc, x| acc + x[i]);
+        let sum = scrubber_matrix
+            .clone()
+            .into_iter()
+            .fold(0, |acc, x| acc + x[i]);
 
         if sum * 2 < scrubber_matrix.len().try_into().unwrap() {
             scrubber_matrix = scrubber_matrix.into_iter().filter(|x| x[i] == 1).collect();
@@ -41,7 +47,14 @@ fn main() {
         i += 1;
     }
 
-    let res = scrubber_matrix[0].clone().into_iter().fold(0, |acc, x| acc*2 + x) * generator_matrix[0].clone().into_iter().fold(0, |acc, x| acc*2 + x);
+    let res = scrubber_matrix[0]
+        .clone()
+        .into_iter()
+        .fold(0, |acc, x| acc * 2 + x)
+        * generator_matrix[0]
+            .clone()
+            .into_iter()
+            .fold(0, |acc, x| acc * 2 + x);
 
     println!("{}", res);
 }

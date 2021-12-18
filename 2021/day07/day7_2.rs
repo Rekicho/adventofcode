@@ -12,6 +12,14 @@ fn main() {
     let min = numbers.clone().into_iter().min().unwrap();
     let max = numbers.clone().into_iter().max().unwrap();
 
-    let res = (min..max).map(|x| numbers.clone().into_iter().fold(0, |acc, y| acc + fuel_cost((y - x).abs()))).min().unwrap();
+    let res = (min..max)
+        .map(|x| {
+            numbers
+                .clone()
+                .into_iter()
+                .fold(0, |acc, y| acc + fuel_cost((y - x).abs()))
+        })
+        .min()
+        .unwrap();
     println!("{}", res);
 }
